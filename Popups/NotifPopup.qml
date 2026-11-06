@@ -88,6 +88,8 @@ PopupFrame {
                     Layout.maximumWidth: 50
 
                     fillMode: Image.PreserveAspectFit
+                    asynchronous: true
+                    sourceSize.height: notifWidgetContent.maxHeight
                     source: notif?.image.toString() ?? ''
                 }
             }

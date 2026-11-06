@@ -1,84 +1,74 @@
 import QtQuick
 import qs.Singletons
 import Quickshell.Services.Notifications
-import QtQuick.Controls
 pragma ComponentBehavior: Bound
+
+// Ticker: new notifications are queued and scrolled right-to-left one at a time.
 Item {
     id: notifWidget
     clip: true
 
-    ListView {
-        id: notifListView
-        model: Notif.notifications
-        anchors.fill: parent
-        currentIndex: -1
-        interactive: false
+    readonly property real speed: 120 // px per second
+    property var queue: []
+    property Notification current: null
 
-        onCountChanged: {
-            if (currentIndex != (count - 1) && !anim.running) {
-                notifListView.incrementCurrentIndex()
-                anim.running = true
-            }
-            console.log('count changed, new value: ' + notifListView.count + ' current item: ' + notifListView.currentIndex)
+    Connections {
+        target: Notif
+        function onNotificationChanged() {
+            if (!Notif.notification) return
+            notifWidget.queue.push(Notif.notification)
+            notifWidget.showNext()
         }
+    }
 
-        delegate: Row {
-            id: notifWidgetContent
-            spacing: 5
-            required property var modelData
-            required property int index
-            visible: false
-
-            Image {
-                height: notifWidget.height
-                fillMode: Image.PreserveAspectFit
-                source: notifWidgetContent.modelData?.image.toString() ?? ''
-            }
-
-            Text {
-                id: notifText
-                height: notifWidget.height
-                maximumLineCount: 1
-                text: notifWidgetContent.modelData?.body ?? ''
-                font.family: 'SFProDisplay Nerd Font'
-                font.weight: Font.Medium
-                color: '#ffffff'
-                verticalAlignment: Text.AlignVCenter
+    function showNext() {
+        if (ticker.running) return
+        while (queue.length > 0) {
+            const next = queue.shift()
+            if (next) { // null if it was dismissed while waiting
+                current = next
+                content.x = width
+                ticker.start()
+                return
             }
         }
+        current = null
+    }
 
-        SequentialAnimation {
-            id: anim
-            readonly property int duration: (notifListView.currentItem?.width ?? 0) * 25
-            readonly property string propX: 'x'
-            PropertyAction {
-                target: notifListView.currentItem
-                property: 'visible'
-                value: true
-            }
-            NumberAnimation {
-                target: notifListView.currentItem
-                property: anim.propX
-                duration: anim.duration
-                easing.type: Easing.OutInQuad
-                from: -notifListView.currentItem?.width ?? 0
-                to: notifWidget.width
-            }
-            PropertyAction {
-                target: notifListView.currentItem
-                property: 'visible'
-                value: false
-            }
+    Row {
+        id: content
+        visible: ticker.running
+        height: notifWidget.height
+        spacing: 5
 
-            onStarted: {
-                console.log('Started animation for: ' + notifListView.currentIndex + ' loops: ' + anim.loops)
-            }
-            onFinished: {
-                if (notifListView.currentIndex < (notifListView.count - 1)) {
-                    notifListView.incrementCurrentIndex()
-                    anim.restart()
-                }
-                console.log('Stopped animation on: ' + notifListView.currentIndex + ' loops: ' + anim.loops)
+        Image {
+            width: height
+            height: content.height
+            visible: (notifWidget.current?.image ?? '') !== ''
+            fillMode: Image.PreserveAspectFit
+            asynchronous: true
+            source: notifWidget.current?.image ?? ''
+        }
+
+        Text {
+            height: content.height
+            maximumLineCount: 1
+            text: notifWidget.current?.body ?? ''
+            font.family: 'SFProDisplay Nerd Font'
+            font.weight: Font.Medium
+            color: '#ffffff'
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    // Moves the row every frame and stops once its real (current) width has fully left on the left.
+    FrameAnimation {
+        id: ticker
+        onTriggered: {
+            content.x -= notifWidget.speed * frameTime
+            if (content.x + content.width < 0) {
+                stop()
+                Qt.callLater(notifWidget.showNext)
             }
         }
     }
