@@ -6,13 +6,13 @@ import qs.Singletons
 pragma ComponentBehavior: Bound
 
 PopupFrame {
-    id: networkPopup
+    id: audioPopup
 
-    contentHeight: sinksView.contentHeight
+    contentHeight: sinksView.contentHeight + sinksView.topPadding + sinksView.bottomPadding
 
     SinksView {
         id: sinksView
-        anchors.margins: 15
+        padding: 15
         sinks: Audio.hwSinks
     }
 }

@@ -8,15 +8,15 @@ import Quickshell.Services.Notifications
 pragma ComponentBehavior: Bound
 
 PopupFrame {
-    contentHeight: scrollView.contentHeight
+    contentHeight: scrollView.contentHeight + scrollView.topPadding + scrollView.bottomPadding
 
     ScrollView {
         id: scrollView
         anchors.fill: parent
+        padding: 10
         contentWidth: availableWidth
         GridLayout {
-            anchors.fill: parent
-            anchors.margins: 10
+            width: scrollView.availableWidth
             id: notifWidgetContent
             flow: GridLayout.TopToBottom
             readonly property int maxHeight: 50
