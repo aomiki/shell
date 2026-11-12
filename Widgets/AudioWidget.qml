@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls.impl
 import qs.Widgets.Base
 import qs.Popups
 import qs.Singletons
@@ -10,7 +11,17 @@ ItemDelegate {
     required property AudioPopup popup
     text: (Audio.sinkVolume*100).toFixed(0) + '%' 
     icon.name: Audio.sinkIcon
-    font.family: 'SFProDisplay Nerd Font'
+    icon.color: Theme.text
+    font.family: Theme.fontFamily
+
+    contentItem: IconLabel {
+        spacing: control.spacing
+        display: control.display
+        icon: control.icon
+        text: control.text
+        font: control.font
+        color: Theme.text
+    }
 
     background: WidgetShape {
     }

@@ -1,8 +1,10 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls.impl
 import Quickshell.Networking
 import qs.Widgets.Base
 import qs.Popups
+import qs.Singletons
 
 pragma ComponentBehavior: Bound
 
@@ -16,8 +18,13 @@ Row {
             required property var modelData
             readonly property NetworkDevice netDev: modelData as NetworkDevice
             icon.name: netDev.connected? '' : (netDev.type == DeviceType.Wifi ? 'network-wireless-disconnected' : 'network-wired-disconnected')
+            icon.color: Theme.text
             implicitWidth: netDev.connected? networksRow.width : control.height
             implicitHeight: netDev.connected? networksRow.height : control.height
+            contentItem: IconLabel {
+                display: deviceItem.display
+                icon: deviceItem.icon
+            }
             background: Rectangle {
                 color: 'transparent'
             }
@@ -44,11 +51,21 @@ Row {
     Component {
         id: wifiNetworkComp
         ItemDelegate {
+            id: wifiNetworkItem
             required property var modelData
             visible: modelData.connected
             text: modelData?.name
             icon.name: modelData != null? signalStrengthToIcon((modelData.signalStrength*100).toFixed(0)) : 'network-wireless-disconnected'
+            icon.color: Theme.text
 
+            contentItem: IconLabel {
+                spacing: wifiNetworkItem.spacing
+                display: wifiNetworkItem.display
+                icon: wifiNetworkItem.icon
+                text: wifiNetworkItem.text
+                font: wifiNetworkItem.font
+                color: Theme.text
+            }
             background: WidgetShape {
             }
 
@@ -75,11 +92,21 @@ Row {
     Component {
         id: wiredNetworkComp
         ItemDelegate {
+            id: wiredNetworkItem
             required property var modelData
             visible: modelData.connected
             text: modelData?.name
             icon.name: 'network-wired-connected' 
+            icon.color: Theme.text
 
+            contentItem: IconLabel {
+                spacing: wiredNetworkItem.spacing
+                display: wiredNetworkItem.display
+                icon: wiredNetworkItem.icon
+                text: wiredNetworkItem.text
+                font: wiredNetworkItem.font
+                color: Theme.text
+            }
             background: WidgetShape {
             }
         }
