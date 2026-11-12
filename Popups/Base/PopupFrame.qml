@@ -23,6 +23,10 @@ PopupWindow {
         radius: 10
         border.width: 1
         border.color: Theme.popupBorder
+        // default-styled controls inside popups read their colours from here
+        palette.text: Theme.text
+        palette.windowText: Theme.text
+        palette.buttonText: Theme.text
     }
 
     function toggleVisibility()
