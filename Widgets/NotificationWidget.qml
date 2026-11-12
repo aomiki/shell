@@ -54,9 +54,9 @@ Item {
             height: content.height
             maximumLineCount: 1
             text: notifWidget.current?.body ?? ''
-            font.family: 'SFProDisplay Nerd Font'
+            font.family: Theme.fontFamily
             font.weight: Font.Medium
-            color: '#ffffff'
+            color: Theme.text
             verticalAlignment: Text.AlignVCenter
         }
     }

@@ -1,10 +1,11 @@
 import QtQuick
+import qs.Singletons
 
 Text {
     text: ' +  = '
-    font.family: 'SFProDisplay Nerd Font'
+    font.family: Theme.fontFamily
     font.weight: Font.Medium
-    color: '#ffffff'
+    color: Theme.text
     horizontalAlignment: Text.AlignHCenter
     rightPadding: 5
 }

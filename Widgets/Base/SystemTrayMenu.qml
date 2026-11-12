@@ -1,12 +1,13 @@
 import QtQuick
 import QtQuick.Shapes
+import qs.Singletons
 
 Shape {
     id: rectangleShape
     preferredRendererType: Shape.CurveRenderer
 
     ShapePath {
-        fillColor: control.active? '#0b6b9b' : '#25acef'
+        fillColor: control.active? Theme.accent : Theme.accentLight
 
         PathRectangle {
             width: rectangleShape.width

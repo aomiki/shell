@@ -37,7 +37,7 @@ ScrollView {
                 text: Audio.getNodeName(modelData)
 
                 background: Rectangle {
-                    color: iconItem.isDefault? '#d10c0e39' : (iconItem.hovered? '#980c0e39' : 'transparent')
+                    color: iconItem.isDefault? Theme.selected : (iconItem.hovered? Theme.hover : 'transparent')
                 }
                 hoverEnabled: true
 
@@ -66,7 +66,7 @@ ScrollView {
                     implicitWidth: 1
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    color: "#c3c3c3"
+                    color: Theme.separator
                 }
             }
         }
@@ -83,7 +83,7 @@ ScrollView {
                 required property var modelData
 
                 text: (modelData.audio.volume * 100).toFixed(0) + '% '
-                color: 'white'
+                color: Theme.text
                 verticalAlignment: Text.AlignVCenter
             }
         }
@@ -99,7 +99,7 @@ ScrollView {
                 required property var modelData
 
                 text: '(' + modelData.id +') ' + ' ' + Audio.getBluetoothCodec(modelData)
-                color: 'white'
+                color: Theme.text
             }
         }
 

@@ -1,6 +1,7 @@
 import Quickshell
 import QtQuick
 import QtQuick.Controls
+import qs.Singletons
 
 pragma ComponentBehavior: Bound
 
@@ -15,10 +16,10 @@ PopupWindow {
     Rectangle {
         id: networkWindow
         anchors.fill: parent
-        color: '#b35156b3'
+        color: Theme.popupBg
         radius: 10
         border.width: 1
-        border.color: 'white'
+        border.color: Theme.popupBorder
         ItemDelegate {
             id: backButton
             icon.name: 'arrow-left'

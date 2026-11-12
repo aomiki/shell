@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Networking
+import qs.Singletons
 
 pragma ComponentBehavior: Bound
 
@@ -62,7 +63,7 @@ ScrollView {
                 required property var modelData
                 readonly property WifiNetwork net: modelData
                 text: (net?.signalStrength*100).toFixed(0) + '% '
-                color: 'white'
+                color: Theme.text
             }
         }
         Repeater {
@@ -77,7 +78,7 @@ ScrollView {
                     implicitWidth: 1
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    color: "#c3c3c3"
+                    color: Theme.separator
                 }
                 required property int index
             }
@@ -97,7 +98,7 @@ ScrollView {
                 readonly property WifiDevice dev: net?.device ?? null
                 text: net?.name
                 background: Rectangle {
-                    color: networkItem.hovered? '#980c0e39' : 'transparent'
+                    color: networkItem.hovered? Theme.hover : 'transparent'
                 }
                 hoverEnabled: true
 
@@ -115,7 +116,7 @@ ScrollView {
 
         Component.onCompleted: {
             networksView.reloadButton.visible = true
-            networksView.reloadButton.icon.color = networksView.dev.scannerEnabled? 'grey' : 'white'
+            networksView.reloadButton.icon.color = networksView.dev.scannerEnabled? Theme.textDisabled : Theme.text
         }
         Component.onDestruction: networksView.reloadButton.visible = false
 

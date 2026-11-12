@@ -5,13 +5,14 @@ import QtQuick.Layouts
 import qs.Widgets
 import qs.Popups
 import qs.Popups.Base
+import qs.Singletons
 
 Scope {
   Variants {
     model: Quickshell.screens
     PanelWindow {
       id: bar
-      color: '#988288ff'
+      color: Theme.bar
       required property var modelData
       property PopupFrame activePopup
       screen: modelData
@@ -38,7 +39,7 @@ Scope {
           contentItem: Rectangle {
               implicitWidth: 1
               implicitHeight: 24
-              color: "#c3c3c3"
+              color: Theme.separator
           }
        }
         HyprWorkspacesWidget {
@@ -90,7 +91,7 @@ Scope {
           contentItem: Rectangle {
               implicitWidth: 1
               implicitHeight: 24
-              color: "#c3c3c3"
+              color: Theme.separator
           }
        }
         NetworkWidget {
@@ -100,7 +101,7 @@ Scope {
           contentItem: Rectangle {
               implicitWidth: 1
               implicitHeight: 24
-              color: "#c3c3c3"
+              color: Theme.separator
           }
        }
         PowerWidget {
@@ -112,7 +113,7 @@ Scope {
           contentItem: Rectangle {
               implicitWidth: 1
               implicitHeight: 24
-              color: "#c3c3c3"
+              color: Theme.separator
           }
        }
         ArchLogoWidget {

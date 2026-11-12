@@ -23,13 +23,21 @@ PopupFrame {
 
         Text {
             text: Time.readableDateTime
-            color: 'white'
+            color: Theme.text
         }
 
         DayOfWeekRow {
             Layout.fillWidth: true
             id: header
             locale: grid.locale
+            delegate: Text {
+                required property string shortName
+                text: shortName
+                font: header.font
+                color: Theme.text
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
         }
 
         MonthGrid {
@@ -43,7 +51,7 @@ PopupFrame {
             delegate: Rectangle {
                 readonly property bool isToday: (model.month == grid.month) && (model.day == datePopup.currDay) && (model.year == grid.year)
                 required property var model
-                color: isToday? 'white' : 'transparent'
+                color: isToday? Theme.highlight : 'transparent'
                 radius: 4
                 Text {
                     anchors.fill: parent
@@ -52,7 +60,7 @@ PopupFrame {
                     opacity: parent.model.month === grid.month ? 1 : 0
                     text: parent.model.day
                     font: grid.font
-                    color: parent.isToday? 'black' : grid.palette.text
+                    color: parent.isToday? Theme.textOnHighlight : Theme.text
                 }
             }
         }

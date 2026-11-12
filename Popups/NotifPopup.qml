@@ -53,7 +53,7 @@ PopupFrame {
                     readonly property Notification notif: modelData
 
                     font.weight: Font.Medium
-                    color: '#ffffff'
+                    color: Theme.text
                     verticalAlignment: Text.AlignVCenter
                     text: notif.appName ?? ''
                 }
@@ -71,7 +71,7 @@ PopupFrame {
 
                     contentItem: Rectangle {
                         implicitWidth: 1
-                        color: "#c3c3c3"
+                        color: Theme.separator
                     }
                 }
             }
@@ -110,15 +110,15 @@ PopupFrame {
                     readonly property Notification notif: modelData
                     contentItem: Text {
                         text: notif?.body ?? ''
-                        font.family: 'SFProDisplay Nerd Font'
+                        font.family: Theme.fontFamily
                         font.weight: Font.Medium
-                        color: '#ffffff'
+                        color: Theme.text
                         verticalAlignment: Text.AlignVCenter
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     }
 
                     background: Rectangle {
-                        color: notifText.hovered? '#980c0e39' : 'transparent'
+                        color: notifText.hovered? Theme.hover : 'transparent'
                     }
                     hoverEnabled: true
 

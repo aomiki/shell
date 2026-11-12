@@ -1,6 +1,7 @@
 import Quickshell.Networking
 import QtQuick
 import QtQuick.Controls
+import qs.Singletons
 pragma ComponentBehavior: Bound
 
 
@@ -23,7 +24,7 @@ Column {
             icon.name: modelData.type == DeviceType.Wifi? 'network-wireless' : 'network-wired'
 
             background: Rectangle {
-                color: deviceItem.hovered? '#980c0e39' : 'transparent'
+                color: deviceItem.hovered? Theme.hover : 'transparent'
             }
             hoverEnabled: true
 

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
+import qs.Singletons
 
 ItemDelegate {
     required property QsMenuEntry modelData
@@ -9,7 +10,7 @@ ItemDelegate {
 
     id: control
     text: hyprName
-    readonly property string bgColor: active? '#0b6b9b' : null
+    readonly property string bgColor: active? Theme.accent : null
 
     contentItem: WidgetText {}
     background: WidgetShape { }

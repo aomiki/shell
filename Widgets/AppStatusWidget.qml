@@ -1,12 +1,13 @@
 import QtQuick
 import Quickshell.Wayland
+import qs.Singletons
 
 Text {
     id: appStatusWidget
     text: ToplevelManager.activeToplevel?.title ?? ''
-    font.family: 'SFProDisplay Nerd Font'
+    font.family: Theme.fontFamily
     font.weight: Font.Light
-    color: '#ffffff'
+    color: Theme.text
     verticalAlignment: Text.AlignVCenter
     wrapMode: Text.WrapAnywhere
     maximumLineCount: 1
